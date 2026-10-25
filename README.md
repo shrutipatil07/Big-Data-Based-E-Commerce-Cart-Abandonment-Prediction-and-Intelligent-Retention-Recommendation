@@ -1,4 +1,4 @@
-﻿# 🛒 CartGuard ML: Big Data-Based E-Commerce Cart Abandonment Prediction & Intelligent Customer Retention System
+# 🛒 CartGuard ML: Big Data-Based E-Commerce Cart Abandonment Prediction & Intelligent Customer Retention System
 
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
@@ -27,16 +27,16 @@ Cart abandonment accounts for an estimated **$18+ Billion in lost annual digital
 ## 🏗️ Architecture & System Design
 
 ```mermaid
-graph TD
-    A[Shopper Browser Session] -->|Telemetry / Presets| B[React + TypeScript Frontend]
-    B -->|REST JSON / Multipart CSV| C[FastAPI Production Gateway]
-    C -->|Feature Extraction| D[Feature Normalizer - RobustScaler]
-    D -->|Scaled Feature Vector| E[Random Forest ML Ensemble]
-    E -->|Continuous Probabilities| F[Decision Engine - Threshold 0.30]
-    F -->|Risk Classification| G[Retention Recommendation Engine]
-    G -->|Persist Audit Record| H[(SQLite Database)]
-    G -->|JSON Payload| B
-    B -->|Interactive Gauge & Action Plan| A
+flowchart TD
+    A["Shopper Browser Session"] -->|"Telemetry / Presets"| B["React + TypeScript Frontend"]
+    B -->|"REST JSON / Multipart CSV"| C["FastAPI Production Gateway"]
+    C -->|"Feature Extraction"| D["Feature Normalizer - RobustScaler"]
+    D -->|"Scaled Feature Vector"| E["Random Forest ML Ensemble"]
+    E -->|"Continuous Probabilities"| F["Decision Engine - Threshold 0.30"]
+    F -->|"Risk Classification"| G["Retention Recommendation Engine"]
+    G -->|"Persist Audit Record"| H[("SQLite Database")]
+    G -->|"JSON Payload"| B
+    B -->|"Interactive Gauge and Action Plan"| A
 ```
 
 ---
