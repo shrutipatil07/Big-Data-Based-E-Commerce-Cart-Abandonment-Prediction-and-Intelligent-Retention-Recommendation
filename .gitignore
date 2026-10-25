@@ -1,0 +1,53 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+*.env.local
+
+# Data files (too large for git)
+data/raw/
+data/processed/*.csv
+data/processed/*.parquet
+*.csv
+*.parquet
+!data/README.md
+
+# Model artifacts (generated, not committed)
+artifacts/*.joblib
+artifacts/*.pkl
+artifacts/*.pickle
+
+# Node
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# SQLite database
+*.db
+*.sqlite
+*.sqlite3

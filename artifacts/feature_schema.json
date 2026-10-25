@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": "RetailRocket",
+  "prediction_unit": "cart-item-session",
+  "prediction_unit_description": "A unique (visitor, item, session) combination where an add-to-cart event occurred",
+  "target": {
+    "column": "label",
+    "type": "int",
+    "mapping": {
+      "0": "Converted",
+      "1": "Abandoned"
+    },
+    "positive_class": 1,
+    "positive_class_label": "Abandoned",
+    "definition": "1 if no transaction for (visitor, item) within 24h after prediction_timestamp, else 0"
+  },
+  "identifier_columns": [
+    {"name": "session_id", "type": "str", "description": "Composite session identifier: {visitorid}_{session_num}"},
+    {"name": "visitorid", "type": "int", "description": "Unique visitor identifier"},
+    {"name": "itemid", "type": "int", "description": "Unique item identifier"}
+  ],
+  "timestamp_column": {
+    "name": "prediction_timestamp",
+    "type": "int64",
+    "unit": "milliseconds",
+    "description": "Unix timestamp (ms) of the first add-to-cart event for this unit"
+  },
+  "leakage_columns": [
+    {"name": "converted", "type": "bool", "reason": "Derived directly from target label"}
+  ],
+  "features": [
+    {
+      "name": "hist_views",
+      "type": "int",
+      "category": "historical",
+      "description": "Total view events by this visitor before prediction_timestamp",
+      "min": 0,
+      "ui_label": "Historical Views",
+      "ui_tooltip": "Number of product views by this visitor before the cart event"
+    },
+    {
+      "name": "hist_addtocarts",
+      "type": "int",
+      "category": "historical",
+      "description": "Total add-to-cart events by this visitor before or at prediction_timestamp",
+      "min": 1,
+      "ui_label": "Historical Add-to-Carts",
+      "ui_tooltip": "Number of add-to-cart actions by this visitor (includes current)"
+    },
+    {
+      "name": "hist_transactions",
+      "type": "int",
+      "category": "historical",
+      "description": "Total transaction events by this visitor before prediction_timestamp",
+      "min": 0,
+      "ui_label": "Historical Transactions",
+      "ui_tooltip": "Number of completed purchases by this visitor before this cart event"
+    },
+    {
+      "name": "hist_unique_items",
+      "type": "int",
+      "category": "historical",
+      "description": "Number of unique items this visitor interacted with before prediction_timestamp",
+      "min": 1,
+      "ui_label": "Historical Unique Items",
+      "ui_tooltip": "Distinct products this visitor interacted with"
+    },
+    {
+      "name": "session_views",
+      "type": "int",
+      "category": "session",
+      "description": "View events in the current session up to prediction_timestamp",
+      "min": 0,
+      "ui_label": "Session Views",
+      "ui_tooltip": "Product views in the current browsing session"
+    },
+    {
+      "name": "session_addtocarts",
+      "type": "int",
+      "category": "session",
+      "description": "Add-to-cart events in the current session up to prediction_timestamp",
+      "min": 1,
+      "ui_label": "Session Add-to-Carts",
+      "ui_tooltip": "Items added to cart in this session"
+    },
+    {
+      "name": "session_unique_items",
+      "type": "int",
+      "category": "session",
+      "description": "Unique items interacted with in the current session",
+      "min": 1,
+      "ui_label": "Session Unique Items",
+      "ui_tooltip": "Distinct products browsed in this session"
+    },
+    {
+      "name": "session_duration_sec",
+      "type": "float",
+      "category": "session",
+      "description": "Duration of the current session in seconds up to prediction_timestamp",
+      "min": 0.0,
+      "ui_label": "Session Duration (seconds)",
+      "ui_tooltip": "How long the visitor has been browsing in this session"
+    },
+    {
+      "name": "hist_conversion_rate",
+      "type": "float",
+      "category": "historical",
+      "description": "Ratio of historical transactions to historical add-to-carts for this visitor",
+      "min": 0.0,
+      "max": 1.0,
+      "ui_label": "Historical Conversion Rate",
+      "ui_tooltip": "Past purchase completion rate for this visitor (0.0 to 1.0)"
+    },
+    {
+      "name": "categoryid",
+      "type": "int",
+      "category": "item",
+      "description": "Category ID of the item (-1 if unknown)",
+      "sentinel": -1,
+      "ui_label": "Category ID",
+      "ui_tooltip": "Product category identifier (-1 if unavailable)"
+    },
+    {
+      "name": "parent_categoryid",
+      "type": "int",
+      "category": "item",
+      "description": "Parent category ID from category tree (-1 if unknown)",
+      "sentinel": -1,
+      "ui_label": "Parent Category ID",
+      "ui_tooltip": "Parent product category (-1 if unavailable)"
+    },
+    {
+      "name": "num_available_properties",
+      "type": "int",
+      "category": "item",
+      "description": "Count of item properties available at prediction time",
+      "min": 0,
+      "ui_label": "Available Properties",
+      "ui_tooltip": "Number of product attributes available at prediction time"
+    }
+  ],
+  "feature_order": [
+    "hist_views", "hist_addtocarts", "hist_transactions", "hist_unique_items",
+    "session_views", "session_addtocarts", "session_unique_items", "session_duration_sec",
+    "hist_conversion_rate", "categoryid", "parent_categoryid", "num_available_properties"
+  ],
+  "feature_count": 12,
+  "dataset_statistics": {
+    "total_samples": 6516,
+    "class_distribution": {"Abandoned": 4620, "Converted": 1896},
+    "class_ratio": {"Abandoned_pct": 70.9, "Converted_pct": 29.1},
+    "temporal_range": {
+      "start": "2015-06-01T06:11:44Z",
+      "end": "2015-06-23T05:52:32Z",
+      "span_days": 22
+    },
+    "unique_sessions": 4534,
+    "unique_visitors": 4071,
+    "unique_items": 4501
+  }
+}
